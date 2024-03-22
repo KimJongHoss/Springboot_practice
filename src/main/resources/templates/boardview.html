@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 상세 페이지</title>
+</head>
+<style>
+
+    .board{
+         text-align: center;
+    }
+
+
+</style>
+<body>
+<h1 style="text-align: center;">게시판 세부 내용</h1>
+
+    <div class="board">
+        <label for="title">제목</label>
+    <h1 id="title" th:text="${board.title}"></h1>
+        <label for="content">내용</label>
+    <p id="content" th:text="${board.content}"></p>
+    <a th:href="@{${board.filepath}}">이미지 보기</a>
+    <br>
+    <a th:href="@{/board/modify/{id}(id=${board.id})}">글 수정</a>
+    <br>
+    <a th:href="@{/board/delete?(id=${board.id})}">글 삭제</a>
+    <br>
+    <a href="/board/list">목록으로 돌아가기</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 리스트 페이지</title>
+</head>
+<style>
+
+    .layout{
+    margin-top : 40px;
+    border: 1px solid #D5D5D5;
+    }
+.table{
+       table-layout:fixed;
+       width: 100%;
+     }
+td {
+    text-align: center;
+}
+th {
+   border: 1px solid #D5D5D5;
+    }
+</style>
+
+<body>
+
+
+<h1 style="text-align: center;">게시판 목록</h1>
+<div style="width:500px; display: flex; justify-content: center; margin : 0 auto;">
+    <div class="layout">
+        <button onclick="location.href='/board/write'" style="border: none; background-color: #fff; margin: 6px; cursor: pointer; font-size: 16px;">글쓰기</button>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:60px;">글 번호</th>
+                    <th style="width: 150px;">제목</th>
+                    <th style="width:290px;">내용</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr th:each="board : ${list}">
+                <td th:text="${board.id}" style="border: 1px solid #D5D5D5; height: 60px; font-weight: 600; font-size: 18px; border-radius: 0.5rem;"></td>
+                <td><a th:text="${board.title}" style="text-decoration-line: none; color: orange;" th:href="@{/board/view(id=${board.id})}"></a></td>
+                <td th:text="${board.content}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+            <a th:if="${page != nowPage}" th:href="@{/board/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword})}" th:text="${page}"></a>
+            <strong th:if="${page == nowPage}"  th:text="${page}" style="color : orange"></strong>
+        </th:block>
+        <form th:action="@{/board/list}" method="get">
+            <input type="text" name="searchKeyword">
+            <button type="submit">검색</button>
+        </form>
+        <br>
+        <a href="/board/list" style="text-decoration-line: none; color: red;">전체 목록으로 돌아가기</a>
+
+
+    </div>
+</div>
+</body>
+</html>
